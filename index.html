@@ -169,6 +169,9 @@ const SUPABASE_ANON_KEY = "sb_publishable_x2vHE0FxdTaqkFiTUTnX5w_5-kiiM-E";
         document.getElementById('account').scrollIntoView({behavior:'smooth'});
         return false;
       }
+    options: {
+  emailRedirectTo: 'https://neilaadri.github.io/rtsa52ga/'
+}
       if (!currentUser) {
         setAuthMessage('Please sign in or create an account before submitting forms.', 'bad');
         document.getElementById('account').scrollIntoView({behavior:'smooth'});
@@ -201,7 +204,19 @@ const SUPABASE_ANON_KEY = "sb_publishable_x2vHE0FxdTaqkFiTUTnX5w_5-kiiM-E";
       const email = document.getElementById('authEmail').value.trim();
       const password = document.getElementById('authPassword').value;
       if (!email || password.length < 8) return setAuthMessage('Enter a valid email and a password of at least 8 characters.', 'bad');
-      const { data, error } = await supabaseClient.auth.signUp({email, password});
+     const { data, error } = await supabaseClient.auth.signUp({
+  email: email,
+  password: password,
+  options: {
+    emailRedirectTo: "https://neilaadri.github.io/rtsa52ga/"
+  }
+});
+
+if (error) {
+  alert("Sign-up failed: " + error.message);
+} else {
+  alert("Account created! Check your email to confirm your account.");
+}
       if (error) return setAuthMessage(error.message, 'bad');
       if (data.session) {
         currentUser = data.user;
